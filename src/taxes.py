@@ -15,10 +15,11 @@ def calculate_taxes(prices: list[float], tax_rate: float) -> list[float]:
     return taxed_prices
 
 
-def calculate_tax(price: float, tax_rate: float) -> float:
+def calculate_tax(price: float, tax_rate: float, discount: float = 0, round_digit: int = 2) -> float:
     if price < 0:
        raise ValueError('Неверная цена')
     if  tax_rate < 0 or tax_rate >= 100:
         raise ValueError('Неверный налоговый процент')
-    result = price * tax_rate / 100
-    return result + price
+    new_price =price + price * tax_rate / 100
+    price_with_discount = new_price - new_price * discount / 100
+    return round(price_with_discount, round_digit)

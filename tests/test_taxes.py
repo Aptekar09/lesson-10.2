@@ -40,4 +40,24 @@ def test_calculate_tax_invalid_tax_price_after_100():
         calculate_tax(100, 1000)
 
 
+@pytest.mark.parametrize('price, tax_rate, discount, expected', [(100, 10, 0, 110.0),
+                                                                 (100, 10, 10, 99.0),
+                                                                 (100, 10, 100, 0.0)])
+def test_calculate_tax_with_discount(price, tax_rate, discount, expected):
+    assert calculate_tax(price,tax_rate,discount) == expected
+
+
+def test_calculate_tax_with_not_discount():
+    assert calculate_tax(100, 10) == 110
+
+
+
+@pytest.mark.parametrize('round_digits, expected', [(0, 99),
+                                                    (1, 99.4),
+                                                    (2, 99.42),
+                                                    (3, 99.425)])
+def test_calculate_tax_round( round_digits, expected):
+    assert calculate_tax(100, 2.5, 3, round_digits) == expected
+
+
 
